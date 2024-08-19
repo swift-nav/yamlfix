@@ -1,13 +1,14 @@
 ---
 name: Tests
-
 on:  # yamllint disable-line rule:truthy
   push:
     branches: [main]
   pull_request:
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  Tests:
+  checks:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
