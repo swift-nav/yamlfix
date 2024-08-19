@@ -6,7 +6,6 @@ and handlers to achieve the program's purpose.
 
 import logging
 import warnings
-from pathlib import Path
 from typing import List, Optional, Tuple, Union, overload
 
 from _io import TextIOWrapper
@@ -72,8 +71,7 @@ def fix_files(  # pylint: disable=too-many-branches
     total_fixed = 0
 
     for file_ in files:
-        file_is_str = isinstance(file_, str)
-        if file_is_str:
+        if isinstance(file_, str):
             with open(file_, "r", encoding="utf-8") as file_descriptor:
                 source = file_descriptor.read()
                 file_name = file_
@@ -102,7 +100,7 @@ def fix_files(  # pylint: disable=too-many-branches
         if fixed_source != source:
             if dry_run:
                 continue
-            if file_is_str:
+            if isinstance(file_, str):
                 with open(file_, "w", encoding="utf-8") as file_descriptor:
                     file_descriptor.write(fixed_source)
             else:
